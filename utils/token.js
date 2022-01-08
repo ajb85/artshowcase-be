@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { tokenDurations } from "#constants/enums";
 import * as Users from "#queries/users";
 
 export function generateToken(user) {
@@ -14,7 +13,7 @@ export function generateToken(user) {
 
 export async function decodeToken(token) {
   try {
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await Users.find({ id: decoded.id }).first();
 
     if (!user) {

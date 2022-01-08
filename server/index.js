@@ -10,7 +10,7 @@ import { verifyToken } from "#middleware/authentication.js";
 
 // Routes
 import userRoutes from "#routes/users.js";
-import originRoutes from "#routes/images.js";
+import imagesRoutes from "#routes/images.js";
 
 const upload = multer({
   storage: ImgurStorage({ clientId: process.env.IMGUR_CLIENT_ID }),
@@ -49,9 +49,7 @@ server.post(
   "/postImage",
   verifyToken,
   upload.single("image"),
-  async (req, res) => {
-    return res.status(201).send({ link: req.file.link });
-  }
+  async (req, res) => res.status(201).send({ link: req.file.link })
 );
 
 server.use(errorHandler);

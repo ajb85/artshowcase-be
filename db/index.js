@@ -43,7 +43,8 @@ export function queryBuilder(table, requiresFilterToFind) {
       }
 
       const query = db(t.getWithNickName()).orderBy(
-        t.addNicknameToString("id")
+        t.addNicknameToString("id"),
+        "desc"
       );
 
       return filter ? query.where(filter) : query;

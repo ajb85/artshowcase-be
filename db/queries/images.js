@@ -1,12 +1,20 @@
 import bcrypt from "bcrypt";
 import { queryBuilder } from "../";
 
-const defaultQueries = queryBuilder("users", true);
+const defaultQueries = queryBuilder("images");
 
 export function find(filter) {
   return defaultQueries
     .find(filter)
-    .select("id", "name", "description", "link", "created_at", "updated_at");
+    .select(
+      "id",
+      "name",
+      "description",
+      "link",
+      "private",
+      "created_at",
+      "updated_at"
+    );
 }
 
 export function add(data) {
@@ -16,8 +24,13 @@ export function add(data) {
 }
 
 export function edit(filter, data) {
+  const { id, ...d } = data;
+  // if (filter.id) {
+  //   filter.id = BigInt(filter.id);
+  // }
+
   return defaultQueries
-    .edit(filter, data)
+    .edit(filter, d)
     .then(([{ id }]) => defaultQueries.find({ id }).first());
 }
 

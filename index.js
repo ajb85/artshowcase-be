@@ -7,7 +7,7 @@ const server = import("#server/http.js");
 
 process.env.DEBUG && console.log("\n** DEBUG MODE ENABLED **");
 
-const port = process.env.PORT || 4500;
+const port = process.env.PORT || 4501;
 server.then((s) =>
   s.default.listen(port, () => console.log(`\n** Running on port ${port} **\n`))
 );

@@ -4,10 +4,9 @@ import { Router } from "express";
 import { verifyToken } from "#middleware/authentication.js";
 import { validatePassword, validatePasswordChange } from "#middleware/user";
 import { generateToken } from "#utils/token";
-import { encrypt } from "#utils/passwordEncryption";
+import { encrypt } from "#utils/password";
 
 const router = Router();
-const validateUser = validateSchema("user");
 
 router.get("/", verifyToken, (req, res) => {
   const { user } = res.locals;
@@ -26,7 +25,7 @@ router.put("/", verifyToken, validatePasswordChange, async (req, res) => {
   const update = {};
 
   if (req.body.newPassword) {
-    update.password = bcrypt.hashSync(res.body.newPassword);
+    update.password = encrypt(req.body.newPassword);
   }
 
   if (req.body.username) {
@@ -34,6 +33,7 @@ router.put("/", verifyToken, validatePasswordChange, async (req, res) => {
   }
 
   const updatedUser = await Users.edit({ id }, update);
+  delete updatedUser.password;
   return res.status(200).json(updatedUser);
 });
 
