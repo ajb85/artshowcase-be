@@ -11,6 +11,7 @@ import { verifyToken } from "#middleware/authentication.js";
 // Routes
 import userRoutes from "#routes/users.js";
 import imagesRoutes from "#routes/images.js";
+import customizationRoutes from "#routes/customizations.js";
 
 const upload = multer({
   storage: ImgurStorage({ clientId: process.env.IMGUR_CLIENT_ID }),
@@ -40,6 +41,7 @@ server.use(cors(corsOptions));
 
 server.use("/account", userRoutes);
 server.use("/images", imagesRoutes);
+server.use("/customizations", customizationRoutes);
 
 server.get("/", (req, res) => {
   res.send("It's working!");
