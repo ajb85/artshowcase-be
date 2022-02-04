@@ -40,7 +40,7 @@ router.post("/", verifyToken, async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const image = await Images.find({ id }).first();
+  const image = await Images.find({ "i.id": id }).first();
   return res.status(200).json(image);
 });
 
